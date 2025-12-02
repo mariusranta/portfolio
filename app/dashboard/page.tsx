@@ -18,35 +18,7 @@ async function getWeather(city: string): Promise<Weather | null> {
   }
 }
 
-const WORLDNEWS_API = 'https://api.worldnewsapi.com/search-news';
-
-async function getNews(city: string) {
-  const apiKey = process.env.WORLDNEWS_API_KEY;
-  if (!apiKey) throw new Error('WORLDNEWS_API_KEY not set');
-
-  const url = `${WORLDNEWS_API}?${new URLSearchParams({
-    'api-key': apiKey,
-    text: city,           // search term
-    language: 'fi',
-    number: '3',          // limit results
-  }).toString()}`;
-
-  const res = await fetch(url, {
-    // cache on the server; adjust as needed
-    next: { revalidate: 60 * 30 },
-  });
-  if (!res.ok) throw new Error(`WorldNewsAPI failed: ${res.status}`);
-  const data = await res.json();
-  return data.news; // array of articles
-}
-
-async function getGitHubStats() {
-  // e.g., GitHub REST via PAT stored in env; use cache: 'no-store' or ISR
-  return { stars: 0, repos: 0 } // placeholder
-}
-
 export default async function DashboardPage() {
-  const news = await getNews('Turku');
   const city = 'Turku'
   const [weather] = await Promise.all([
     getWeather(city)
@@ -84,18 +56,3 @@ export default async function DashboardPage() {
 }
 
 // TODO: https://github.com/AttLii/neksti-tv
-
-// roskiin
-/*
-      <section className="rounded border p-4">
-        <div>
-          {news.map((article: any) => (
-            <article key={article.id}>
-              <h3>{article.title}</h3>
-              <p>{article.summary}</p>
-              <a href={article.url} target="_blank" rel="noreferrer">Read</a>
-            </article>
-          ))}
-        </div>
-      </section>
-      */
