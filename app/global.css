@@ -3,6 +3,7 @@
 ::selection {
   background-color: #47a3f3;
   color: #fefefe;
+  
 }
 
 :root {
@@ -15,6 +16,7 @@
   --sh-jsxliterals: #6266d1;
   --sh-property: #e25a1c;
   --sh-entity: #e25a1c;
+  
 }
 
 @media (prefers-color-scheme: dark) {

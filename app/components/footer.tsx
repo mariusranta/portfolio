@@ -35,7 +35,7 @@ export default function Footer() {
             className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
             rel="noopener noreferrer"
             target="_blank"
-            href="https://github.com/vercel/next.js"
+            href="https://github.com/mariusranta"
           >
             <ArrowIcon />
             <p className="ml-2 h-7">github</p>
@@ -46,15 +46,37 @@ export default function Footer() {
             className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
             rel="noopener noreferrer"
             target="_blank"
-            href="https://vercel.com/templates/next.js/portfolio-starter-kit"
+            href="https://www.youtube.com/watch?v=EJfAeRpk8wE"
           >
             <ArrowIcon />
-            <p className="ml-2 h-7">view source</p>
+            <p className="ml-2 h-7">fashion</p>
+          </a>
+        </li>
+        <li>
+          <a
+            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://open.spotify.com/track/6Zy7DwGzHvezMHUASmAvqv?si=d109f3a85d884730"
+          >
+            <ArrowIcon />
+            <p className="ml-2 h-7">music</p>
+          </a>
+        </li>
+        <li>
+          <a
+            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://heatherwick.com/projects/buildings/lantern-house/"
+          >
+            <ArrowIcon />
+            <p className="ml-2 h-7">design</p>
           </a>
         </li>
       </ul>
       <p className="mt-8 text-neutral-600 dark:text-neutral-300">
-        © {new Date().getFullYear()} MIT Licensed
+        © {new Date().getFullYear()} Marius Ranta.
       </p>
     </footer>
   )
