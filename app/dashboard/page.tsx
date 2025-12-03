@@ -1,5 +1,7 @@
 import LeafletMapClient from "./LeafletMapClient";
 
+export const dynamic = 'force-dynamic' // always fetch fresh data on each request
+
 type Weather = {
   location: { name: string; region: string; localtime: string }
   current: { temp_c: number; feelslike_c: number; condition: { text: string; icon: string } }
@@ -33,10 +35,12 @@ export default async function DashboardPage() {
   }
 
   return (
-    <main className="space-y-6">
+      <>
+      <section>
       <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
-          My Doomsday Dashboard
+        My Doomsday Dashboard
       </h1>
+      </section>
       <h2 className="text-lg font-medium mb-2">Weather</h2>
       <section className="rounded-xl border p-4 flex items-center gap-4">
         <img src={`https:${weather.current.condition.icon}`} alt={weather.current.condition.text} width={48} height={48} />
@@ -55,7 +59,7 @@ export default async function DashboardPage() {
           <LeafletMapClient />
         </div>
       </section>
-    </main>
+      </>
   )
 }
 
