@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Footer from './components/footer'
 import { baseUrl } from './sitemap'
+import { Hero } from './components/hero'
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -14,12 +15,12 @@ export const metadata: Metadata = {
     default: 'Marius',
     template: '%s | Marius',
   },
-  description: 'This is my portfolio.',
+  description: 'This is my world.',
   openGraph: {
-    title: 'My Portfolio',
-    description: 'This is my portfolio.',
+    title: 'My World',
+    description: 'This is my world.',
     url: baseUrl,
-    siteName: 'My Portfolio',
+    siteName: 'My World',
     locale: 'en_US',
     type: 'website',
   },
@@ -52,14 +53,17 @@ export default function RootLayout({
         GeistMono.variable
       )}
     >
-      <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
-          <Navbar />
-          {children}
-          <Footer />
-          <Analytics />
-          <SpeedInsights />
-        </main>
+      <body className="antialiased">
+          <Hero />
+        <div className="relative min-h-screen max-w-xl mx-4 mt-8 lg:mx-auto">
+          <main className="flex-auto min-w-0 flex flex-col px-2 md:px-0">
+            <Navbar />
+            {children}
+            <Footer />
+            <Analytics />
+            <SpeedInsights />
+          </main>
+        </div>
       </body>
     </html>
   )

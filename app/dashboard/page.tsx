@@ -34,7 +34,11 @@ export default async function DashboardPage() {
 
   return (
     <main className="space-y-6">
-      <section className="rounded border p-4 flex items-center gap-4">
+      <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
+          My Doomsday Dashboard
+      </h1>
+      <h2 className="text-lg font-medium mb-2">Weather</h2>
+      <section className="rounded-xl border p-4 flex items-center gap-4">
         <img src={`https:${weather.current.condition.icon}`} alt={weather.current.condition.text} width={48} height={48} />
         <div>
           <div className="text-lg font-medium">
@@ -45,9 +49,9 @@ export default async function DashboardPage() {
           <div className="text-sm text-neutral-500">Local time: {weather.location.localtime}</div>
         </div>
       </section>
-      <section className="border rounded-xl p-4 shadow-sm">
-        <h2 className="text-lg font-medium mb-2">Kartta</h2>
-        <div className="w-full h-[350px]">
+      <h2 className="text-lg font-medium mb-2">Map</h2>
+      <section className="border rounded-xl shadow-sm">
+        <div className="w-full h-[350px] rounded-xl overflow-hidden">
           <LeafletMapClient />
         </div>
       </section>

@@ -1,8 +1,8 @@
-import { BlogPosts } from 'app/components/posts'
+import { Hero } from "./components/hero"
 
 export default function Page() {
   return (
-    <section>
+      <section>
       <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
         My World
       </h1>
@@ -11,9 +11,9 @@ export default function Page() {
         
         I love designing, building, and solving problems as a team.`}
       </p>
-      <div className="my-8">
-        <BlogPosts />
-      </div>
     </section>
   )
 }
+
+
+// <Hero />

@@ -16,11 +16,11 @@ const exampleGeoJson: GeoJSON.FeatureCollection = {
         type: "Polygon",
         coordinates: [
           [
-            [22.258, 60.448],
-            [22.273, 60.448],
-            [22.273, 60.456],
-            [22.258, 60.456],
-            [22.258, 60.448],
+            [24.270, 60.448],
+            [24.270, 60.448],
+            [24.270, 60.448],
+            [24.260, 60.448],
+            [24.260, 60.448],
           ],
         ],
       },
@@ -32,7 +32,7 @@ export default function LeafletMap() {
   useEffect(() => {
     if (mapInstance) return;
 
-    const map = L.map("leaflet-map").setView([60.4518, 22.2666], 12);
+    const map = L.map("leaflet-map").setView([60.4518, 22.2666], 13);
     mapInstance = map;
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -40,13 +40,13 @@ export default function LeafletMap() {
       attribution: "&copy; OpenStreetMap contributors",
     }).addTo(map);
 
-    L.marker([60.4518, 22.2666])
+    L.marker([60.4616, 22.2666])
       .addTo(map)
       .bindPopup("Turku center");
 
     L.geoJSON(exampleGeoJson, {
       style: () => ({
-        color: "#3388ff",
+        color: "#ff3333ff",
         weight: 2,
         fillOpacity: 0.2,
       }),
