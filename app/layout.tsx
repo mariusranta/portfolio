@@ -12,15 +12,15 @@ import { Hero } from './components/hero'
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'Marius',
-    template: '%s | Marius',
+    default: 'Marius Ranta',
+    template: '%s | Marius Ranta',
   },
-  description: 'This is my world.',
+  description: 'Computer science student at the University of Turku. I love designing, building, and solving problems as a team.',
   openGraph: {
-    title: 'My World',
-    description: 'This is my world.',
+    title: 'Marius Ranta',
+    description: 'Computer science student at the University of Turku. I love designing, building, and solving problems as a team.',
     url: baseUrl,
-    siteName: 'My World',
+    siteName: 'Marius Ranta',
     locale: 'en_US',
     type: 'website',
   },
@@ -54,8 +54,8 @@ export default function RootLayout({
       )}
     >
       <body className="antialiased">
-          <Hero />
-        <div className="relative min-h-screen max-w-xl mx-4 mt-8 lg:mx-auto">
+        <Hero />
+        <div className="relative min-h-screen max-w-2xl mx-4 mt-8 lg:mx-auto">
           <main className="flex-auto min-w-0 flex flex-col px-2 md:px-0">
             <Navbar />
             {children}
