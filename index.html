@@ -156,6 +156,54 @@
     }
     .line { min-height: 1.35em; white-space: pre-wrap; }
     .line.blank { min-height: .72em; }
+    .timeline {
+      max-width: 100%;
+      display: grid;
+      gap: .2em;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+    .timeline-entry {
+      display: grid;
+      grid-template-columns: 9ch minmax(0, 1fr);
+      column-gap: 1.25ch;
+      min-width: 0;
+      padding-bottom: .65em;
+    }
+    .timeline-date {
+      color: #00FF00;
+      font-size: .92em;
+      line-height: 1.35;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .timeline-content {
+      position: relative;
+      min-width: 0;
+      padding: 0 0 .1em 1.3ch;
+      border-left: 1px solid rgba(0, 255, 0, .48);
+      overflow-wrap: anywhere;
+    }
+    .timeline-content::before {
+      position: absolute;
+      top: .42em;
+      left: -3px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #00FF00;
+      content: "";
+    }
+    .timeline-role, .timeline-organization {
+      display: block;
+      color: #00FF00;
+    }
+    .timeline-description {
+      margin-top: .28em;
+      color: #00FF00;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
     .line.banner {
       color: #00FF00;
       font-size: 1em;
@@ -211,6 +259,9 @@
       .window.is-minimized { height: 30px; }
       .window-control { width: 34px; }
       .window-control.close { width: 34px; }
+      .timeline-entry { grid-template-columns: minmax(0, 1fr); gap: .15em; padding-bottom: .7em; }
+      .timeline-date { text-align: left; }
+      .timeline-content { margin-left: .25ch; }
       .transcript { max-height: calc(100svh - 72px); padding: 7px 8px 2px; font-size: clamp(14px, 4vw, 16px); }
       .input-form { padding: 0 8px max(12px, env(safe-area-inset-bottom)); font-size: clamp(14px, 4vw, 16px); }
     }
@@ -274,6 +325,44 @@
       transcript.appendChild(line);
       transcript.scrollTop = transcript.scrollHeight;
       return line;
+    }
+
+    function addExperienceTimeline(entries) {
+      const timeline = document.createElement("div");
+      timeline.className = "line timeline";
+      timeline.setAttribute("role", "list");
+
+      entries.forEach(function (entry) {
+        const item = document.createElement("div");
+        item.className = "timeline-entry";
+        item.setAttribute("role", "listitem");
+
+        const date = document.createElement("div");
+        date.className = "timeline-date";
+        date.textContent = entry.date;
+
+        const content = document.createElement("div");
+        content.className = "timeline-content";
+
+        const role = document.createElement("span");
+        role.className = "timeline-role";
+        role.textContent = entry.role;
+
+        const organization = document.createElement("span");
+        organization.className = "timeline-organization";
+        organization.textContent = entry.organization;
+
+        const description = document.createElement("div");
+        description.className = "timeline-description";
+        description.textContent = entry.description;
+
+        content.append(role, organization, description);
+        item.append(date, content);
+        timeline.appendChild(item);
+      });
+
+      transcript.appendChild(timeline);
+      transcript.scrollTop = transcript.scrollHeight;
     }
 
     function addCommand(command) {
@@ -351,10 +440,15 @@
           addLinkLine("  Source:", "https://github.com/mariusranta/portfolio");
           break;
         case "experience":
-          addLine("Education");
-          addLine("  Computer Science — University of Turku");
-          addLine("");
-          addLine("More experience details will be added here.");
+          addLine("Experience", "hint");
+          addExperienceTimeline([
+            {
+              date: "Present",
+              role: "Computer Science Student",
+              organization: "University of Turku",
+              description: "Currently studying computer science."
+            }
+          ]);
           break;
         case "contact":
           addLine("Contact:");
