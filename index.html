@@ -50,6 +50,7 @@
       min-height: 0;
     }
     .window.is-minimized .terminal { display: none; }
+    .window[hidden], .reopen-window[hidden] { display: none; }
     .titlebar {
       height: 36px;
       flex: 0 0 36px;
@@ -427,6 +428,11 @@
     });
 
     maximizeButton.addEventListener("click", function () {
+      if (commandWindow.classList.contains("is-minimized")) {
+        commandWindow.classList.remove("is-minimized");
+        minimizeButton.setAttribute("aria-label", "Minimize Command Prompt");
+        minimizeButton.title = "Minimize";
+      }
       const windowed = commandWindow.classList.toggle("is-windowed");
       maximizeButton.setAttribute("aria-label", windowed ? "Maximize Command Prompt" : "Restore Command Prompt");
       maximizeButton.title = windowed ? "Maximize" : "Restore";
