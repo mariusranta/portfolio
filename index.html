@@ -33,32 +33,49 @@
       overflow: hidden;
       background: #000;
     }
+    .window.is-windowed {
+      position: fixed;
+      z-index: 2;
+      top: 50%;
+      left: 50%;
+      width: min(960px, calc(100vw - 32px));
+      height: min(640px, calc(100dvh - 32px));
+      min-height: 0;
+      transform: translate(-50%, -50%);
+      border: 1px solid #494949;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, .65);
+    }
+    .window.is-minimized {
+      height: 36px;
+      min-height: 0;
+    }
+    .window.is-minimized .terminal { display: none; }
     .titlebar {
-      height: 32px;
-      flex: 0 0 32px;
+      height: 36px;
+      flex: 0 0 36px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 0 0 0 9px;
-      border-bottom: 1px solid #3a3a3a;
-      background: #2b2b2b;
-      color: #e5e5e5;
+      gap: 9px;
+      padding: 0 0 0 10px;
+      border-bottom: 1px solid #3b3b3b;
+      background: #323232;
+      color: #ededed;
       user-select: none;
       font-family: "Segoe UI", Arial, sans-serif;
     }
     .app-icon {
-      width: 16px;
-      height: 16px;
-      flex: 0 0 16px;
+      width: 17px;
+      height: 17px;
+      flex: 0 0 17px;
       display: block;
-      color: #d8d8d8;
+      color: #dedede;
     }
     .title {
       flex: 1;
       min-width: 0;
       overflow: hidden;
-      color: #e5e5e5;
-      font: 13px/1.2 "Segoe UI", Arial, sans-serif;
+      color: #ededed;
+      font: 600 14px/1.2 "Segoe UI", Arial, sans-serif;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -73,12 +90,47 @@
       height: 100%;
       display: grid;
       place-items: center;
-      color: #dedede;
-      font: 13px/1 "Segoe UI", Arial, sans-serif;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: #ededed;
+      cursor: default;
     }
-    .window-control.maximize { font-size: 12px; }
-    .window-control.close { width: 48px; font-size: 16px; }
+    .window-control svg {
+      width: 12px;
+      height: 12px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.4;
+      stroke-linecap: square;
+      stroke-linejoin: miter;
+    }
+    .window-control:hover { background: #454545; }
+    .window-control:focus-visible { outline: 1px solid #fff; outline-offset: -3px; }
+    .window-control.close { width: 48px; }
+    .window-control.close svg { width: 13px; height: 13px; }
     .window-control.close:hover { color: #fff; background: #c42b1c; }
+    .icon-restore, .icon-restore-down { display: none; }
+    .window.is-minimized .icon-minimize { display: none; }
+    .window.is-minimized .icon-restore { display: block; }
+    .window.is-windowed .icon-maximize { display: none; }
+    .window.is-windowed .icon-restore-down { display: block; }
+    .reopen-window {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 10px 16px;
+      border: 1px solid #555;
+      border-radius: 2px;
+      background: #323232;
+      color: #ededed;
+      font: 14px "Segoe UI", Arial, sans-serif;
+      cursor: pointer;
+    }
+    .reopen-window:hover { background: #414141; }
+    .reopen-window:focus-visible { outline: 2px solid #ededed; outline-offset: 3px; }
     .terminal {
       min-height: 0;
       flex: 1;
@@ -153,9 +205,10 @@
     }
     #command::selection { background: #075907; color: #fff; }
     @media (max-width: 600px) {
-      .titlebar { height: 32px; flex-basis: 32px; padding-left: 8px; gap: 7px; }
-      .window-control { width: 38px; }
-      .window-control.close { width: 42px; }
+      .titlebar { height: 34px; flex-basis: 34px; padding-left: 8px; gap: 7px; }
+      .window.is-minimized { height: 34px; }
+      .window-control { width: 40px; }
+      .window-control.close { width: 44px; }
       .transcript { max-height: calc(100svh - 72px); padding: 7px 8px 2px; font-size: clamp(14px, 4vw, 16px); }
       .input-form { padding: 0 8px max(12px, env(safe-area-inset-bottom)); font-size: clamp(14px, 4vw, 16px); }
     }
@@ -165,7 +218,7 @@
   </style>
 </head>
 <body>
-  <main class="window" aria-label="Marius Ranta personal website">
+  <main class="window" id="command-window" aria-label="Marius Ranta personal website">
     <header class="titlebar">
       <svg class="app-icon" viewBox="0 0 16 16" aria-hidden="true">
         <rect x="1" y="2" width="14" height="11" rx="1" fill="none" stroke="currentColor"/>
@@ -173,10 +226,18 @@
         <path d="m4 6 2 1.5L4 9M7 9h3" fill="none" stroke="currentColor" stroke-linecap="square"/>
       </svg>
       <span class="title">Command Prompt</span>
-      <div class="window-controls" aria-hidden="true">
-        <span class="window-control minimize">−</span>
-        <span class="window-control maximize">□</span>
-        <span class="window-control close">×</span>
+      <div class="window-controls">
+        <button class="window-control minimize" id="minimize-window" type="button" aria-label="Minimize Command Prompt" title="Minimize">
+          <svg class="icon-minimize" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>
+          <svg class="icon-restore" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="6.5" width="11" height="11"/></svg>
+        </button>
+        <button class="window-control maximize" id="maximize-window" type="button" aria-label="Restore Command Prompt" title="Restore">
+          <svg class="icon-maximize" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="6.5" width="11" height="11"/></svg>
+          <svg class="icon-restore-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6.5h9.5V16M6.5 9.5v8h9"/></svg>
+        </button>
+        <button class="window-control close" id="close-window" type="button" aria-label="Close Command Prompt" title="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg>
+        </button>
       </div>
     </header>
     <section class="terminal" aria-label="Interactive command prompt">
@@ -187,10 +248,16 @@
       </form>
     </section>
   </main>
+  <button class="reopen-window" id="reopen-window" type="button" hidden>Open Command Prompt</button>
   <script>
     const transcript = document.getElementById("transcript");
     const form = document.getElementById("command-form");
     const input = document.getElementById("command");
+    const commandWindow = document.getElementById("command-window");
+    const minimizeButton = document.getElementById("minimize-window");
+    const maximizeButton = document.getElementById("maximize-window");
+    const closeButton = document.getElementById("close-window");
+    const reopenButton = document.getElementById("reopen-window");
     const homePath = "C:" + String.fromCharCode(92) + "Users" + String.fromCharCode(92) + "Marius";
     const promptText = homePath + ">";
     const history = [];
@@ -351,6 +418,35 @@
         input.value = historyIndex === history.length ? draft : history[historyIndex];
         input.setSelectionRange(input.value.length, input.value.length);
       }
+    });
+
+    minimizeButton.addEventListener("click", function () {
+      const minimized = commandWindow.classList.toggle("is-minimized");
+      minimizeButton.setAttribute("aria-label", minimized ? "Restore Command Prompt" : "Minimize Command Prompt");
+      minimizeButton.title = minimized ? "Restore" : "Minimize";
+    });
+
+    maximizeButton.addEventListener("click", function () {
+      const windowed = commandWindow.classList.toggle("is-windowed");
+      maximizeButton.setAttribute("aria-label", windowed ? "Maximize Command Prompt" : "Restore Command Prompt");
+      maximizeButton.title = windowed ? "Maximize" : "Restore";
+    });
+
+    closeButton.addEventListener("click", function () {
+      commandWindow.hidden = true;
+      reopenButton.hidden = false;
+      reopenButton.focus();
+    });
+
+    reopenButton.addEventListener("click", function () {
+      reopenButton.hidden = true;
+      commandWindow.hidden = false;
+      commandWindow.classList.remove("is-minimized", "is-windowed");
+      minimizeButton.setAttribute("aria-label", "Minimize Command Prompt");
+      minimizeButton.title = "Minimize";
+      maximizeButton.setAttribute("aria-label", "Restore Command Prompt");
+      maximizeButton.title = "Restore";
+      input.focus();
     });
 
     welcome();
