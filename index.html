@@ -3,19 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0c0c0c">
+  <meta name="theme-color" content="#000000">
   <meta name="description" content="Marius Ranta — personal website, presented as a classic command prompt.">
   <title>Command Prompt — Marius Ranta</title>
   <style>
     :root {
       color-scheme: dark;
-      font-family: "Cascadia Mono", Consolas, "Courier New", monospace;
+      font-family: "Lucida Console", Consolas, "Courier New", monospace;
       background: #000;
       color: #00ff00;
+      font-weight: 400;
       font-synthesis: none;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-shadow: 0 0 1px #00ff00, 0 0 7px rgba(0, 255, 0, .58);
     }
     * { box-sizing: border-box; }
     body {
@@ -110,19 +108,19 @@
       overflow: auto;
       padding: 5px 8px 2px;
       color: #00ff00;
-      font-size: clamp(16px, 2.15vw, 22px);
-      line-height: 1.24;
+      font-size: clamp(16px, 1.15vw, 18px);
+      line-height: 1.35;
       scrollbar-color: #075907 #000;
       scrollbar-width: thin;
       overflow-wrap: anywhere;
     }
-    .line { min-height: 1.24em; white-space: pre-wrap; }
+    .line { min-height: 1.35em; white-space: pre-wrap; }
     .line.blank { min-height: .72em; }
     .line.banner {
       color: #00ff00;
-      font-size: 1.04em;
-      font-weight: 700;
-      text-shadow: 0 0 2px #00ff00, 0 0 9px rgba(0, 255, 0, .72);
+      font-size: 1em;
+      font-weight: 400;
+      text-shadow: none;
     }
     .line.hint { color: #00d900; }
     .line.error { color: #00ff00; }
@@ -130,7 +128,7 @@
       display: flex;
       align-items: baseline;
       gap: 0;
-      min-height: 1.24em;
+      min-height: 1.35em;
       color: #00ff00;
     }
     .prompt { flex: 0 0 auto; color: #00ff00; }
@@ -150,8 +148,8 @@
       gap: 0;
       padding: 0 8px 12px;
       color: #00ff00;
-      font-size: clamp(16px, 2.15vw, 22px);
-      line-height: 1.24;
+      font-size: clamp(16px, 1.15vw, 18px);
+      line-height: 1.35;
     }
     .input-form label { flex: 0 0 auto; }
     #command {
@@ -166,15 +164,14 @@
       caret-color: #f4fff4;
       caret-shape: block;
       font: inherit;
-      text-shadow: 0 0 2px #00ff00, 0 0 9px rgba(0, 255, 0, .72);
     }
     #command::selection { background: #075907; color: #fff; }
     @media (max-width: 600px) {
       .titlebar { height: 38px; flex-basis: 38px; padding-right: 5px; }
       .active-tab { height: 34px; margin-top: 4px; }
       .tab-tool { width: 30px; }
-      .transcript { max-height: calc(100svh - 72px); padding: 7px 8px 2px; font-size: clamp(15px, 4.1vw, 19px); }
-      .input-form { padding: 0 8px max(12px, env(safe-area-inset-bottom)); font-size: clamp(15px, 4.1vw, 19px); }
+      .transcript { max-height: calc(100svh - 72px); padding: 7px 8px 2px; font-size: clamp(14px, 4vw, 16px); }
+      .input-form { padding: 0 8px max(12px, env(safe-area-inset-bottom)); font-size: clamp(14px, 4vw, 16px); }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; }
