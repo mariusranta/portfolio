@@ -294,7 +294,7 @@
           addLine("marius");
           break;
         case "date":
-          addLine(new Intl.DateTimeFormat(undefined, { dateStyle: "full", timeStyle: "short" }).format(new Date()));
+          addLine(new Intl.DateTimeFormat("en-US", { dateStyle: "full", timeStyle: "short" }).format(new Date()));
           break;
         case "echo":
           addLine(argument);
