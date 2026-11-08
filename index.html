@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c0c0c">
+  <meta name="description" content="Marius Ranta — personal website, presented as a classic command prompt.">
+  <title>Command Prompt — Marius Ranta</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: "Cascadia Mono", Consolas, "Courier New", monospace;
+      background: #080808;
+      color: #d4d4d4;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(40, 47, 56, .20), transparent 62%),
+        #080808;
+    }
+    .window {
+      width: min(100%, 900px);
+      min-height: min(720px, calc(100svh - 48px));
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid #353535;
+      border-radius: 8px;
+      background: #0c0c0c;
+      box-shadow: 0 26px 80px rgba(0, 0, 0, .52), 0 2px 8px rgba(0, 0, 0, .4);
+    }
+    .titlebar {
+      height: 42px;
+      flex: 0 0 42px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px 0 15px;
+      border-bottom: 1px solid #2c2c2c;
+      background: #181818;
+      user-select: none;
+    }
+    .app-icon {
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #737373;
+      border-radius: 3px;
+      color: #d6e7ff;
+      font: 700 9px/1 Consolas, monospace;
+      background: #202d3e;
+    }
+    .title { flex: 1; color: #dedede; font: 13px/1.2 "Segoe UI", Arial, sans-serif; }
+    .window-actions { display: flex; align-self: stretch; }
+    .window-action {
+      width: 44px;
+      display: grid;
+      place-items: center;
+      color: #c7c7c7;
+      font: 13px/1 "Segoe UI", Arial, sans-serif;
+    }
+    .window-action.close { width: 48px; margin-right: -12px; }
+    .window-action.close:hover { background: #c42b1c; color: #fff; }
+    .terminal {
+      min-height: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #0c0c0c;
+    }
+    .transcript {
+      flex: 1;
+      min-height: 280px;
+      overflow: auto;
+      padding: 23px clamp(18px, 4vw, 34px) 13px;
+      color: #d4d4d4;
+      font-size: clamp(13px, 1.55vw, 15px);
+      line-height: 1.65;
+      scrollbar-color: #444 #0c0c0c;
+      scrollbar-width: thin;
+      overflow-wrap: anywhere;
+    }
+    .line { min-height: 1.65em; white-space: pre-wrap; }
+    .line.blank { min-height: .7em; }
+    .line.banner { color: #c9c9c9; }
+    .line.hint { color: #9b9b9b; }
+    .line.status { color: #8ebcff; }
+    .line.error { color: #d4d4d4; }
+    .command-line {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      min-height: 30px;
+      color: #dedede;
+    }
+    .prompt { flex: 0 0 auto; color: #dedede; }
+    .command-text { color: #fff; }
+    a {
+      color: #8ebcff;
+      text-decoration: underline;
+      text-decoration-color: rgba(142, 188, 255, .55);
+      text-underline-offset: 3px;
+    }
+    a:hover, a:focus-visible { color: #c1dbff; text-decoration-color: currentColor; }
+    a:focus-visible, input:focus-visible { outline: 1px dotted #d4d4d4; outline-offset: 3px; }
+    .input-form {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      padding: 2px clamp(18px, 4vw, 34px) 21px;
+      font-size: clamp(13px, 1.55vw, 15px);
+      line-height: 1.65;
+    }
+    .input-form label { flex: 0 0 auto; }
+    #command {
+      width: 100%;
+      min-width: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      outline: 0;
+      background: transparent;
+      color: #fff;
+      caret-color: #f4f4f4;
+      font: inherit;
+    }
+    #command::selection { background: #264f78; color: #fff; }
+    .statusbar {
+      min-height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 14px;
+      border-top: 1px solid #262626;
+      background: #141414;
+      color: #858585;
+      font: 11px/1.3 "Segoe UI", Arial, sans-serif;
+    }
+    .status-ready { display: inline-flex; align-items: center; gap: 7px; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #56b870; box-shadow: 0 0 7px rgba(86, 184, 112, .4); }
+    @media (max-width: 600px) {
+      body { display: block; padding: 0; background: #0c0c0c; }
+      .window {
+        width: 100%;
+        min-height: 100svh;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .window-action { width: 38px; }
+      .window-action.close { width: 42px; }
+      .transcript { min-height: 0; padding-top: 18px; }
+      .input-form { padding-bottom: max(18px, env(safe-area-inset-bottom)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="window" aria-label="Marius Ranta personal website">
+    <header class="titlebar">
+      <span class="app-icon" aria-hidden="true">&gt;_</span>
+      <span class="title">Command Prompt — Marius Ranta</span>
+      <div class="window-actions" aria-hidden="true">
+        <span class="window-action">—</span>
+        <span class="window-action">□</span>
+        <span class="window-action close">×</span>
+      </div>
+    </header>
+    <section class="terminal" aria-label="Interactive command prompt">
+      <div class="transcript" id="transcript" role="log" aria-live="polite" aria-relevant="additions text"></div>
+      <form class="input-form" id="command-form" autocomplete="off">
+        <label class="prompt" for="command">C:\&gt;</label>
+        <input id="command" name="command" type="text" aria-label="Type a command" autocomplete="off" autocapitalize="off" spellcheck="false">
+      </form>
+      <footer class="statusbar">
+        <span class="status-ready"><span class="status-dot" aria-hidden="true"></span>Ready</span>
+        <span>UTF-8&nbsp;&nbsp; · &nbsp;&nbsp;C:\</span>
+      </footer>
+    </section>
+  </main>
+  <script>
+    const transcript = document.getElementById("transcript");
+    const form = document.getElementById("command-form");
+    const input = document.getElementById("command");
+    const promptText = "C:" + String.fromCharCode(92) + ">";
+    const history = [];
+    let historyIndex = 0;
+    let draft = "";
+
+    function addLine(text, className) {
+      const line = document.createElement("div");
+      line.className = "line" + (className ? " " + className : "");
+      if (text === "") line.classList.add("blank");
+      line.textContent = text;
+      transcript.appendChild(line);
+      transcript.scrollTop = transcript.scrollHeight;
+      return line;
+    }
+
+    function addCommand(command) {
+      const line = document.createElement("div");
+      line.className = "line command-line";
+      const prompt = document.createElement("span");
+      prompt.className = "prompt";
+      prompt.textContent = promptText;
+      const text = document.createElement("span");
+      text.className = "command-text";
+      text.textContent = command;
+      line.append(prompt, text);
+      transcript.appendChild(line);
+      transcript.scrollTop = transcript.scrollHeight;
+    }
+
+    function addLinkLine(label, url) {
+      const line = document.createElement("div");
+      line.className = "line";
+      line.append(document.createTextNode(label + " "));
+      const link = document.createElement("a");
+      link.href = url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = url.replace(/^https?:\/\//, "");
+      line.appendChild(link);
+      transcript.appendChild(line);
+      transcript.scrollTop = transcript.scrollHeight;
+    }
+
+    function welcome() {
+      addLine("Microsoft Windows [Version 10.0.22631.1]", "banner");
+      addLine("(c) Microsoft Corporation. All rights reserved.", "banner");
+      addLine("");
+      addLine("Welcome to Marius Ranta's personal site.");
+      addLine("Type help to see what you can do. Use ↑ and ↓ to browse command history.", "hint");
+      addLine("");
+    }
+
+    function run(commandText) {
+      const raw = commandText.trim();
+      if (!raw) return;
+      addCommand(raw);
+      const firstSpace = raw.search(/\s/);
+      const command = (firstSpace < 0 ? raw : raw.slice(0, firstSpace)).toLowerCase();
+      const argument = firstSpace < 0 ? "" : raw.slice(firstSpace).trim();
+
+      switch (command) {
+        case "help":
+          addLine("Available commands:");
+          addLine("  help         Show this list");
+          addLine("  about        About Marius");
+          addLine("  projects     Selected work");
+          addLine("  experience   Education and experience");
+          addLine("  contact      How to get in touch");
+          addLine("  whoami       Show the current user");
+          addLine("  date         Show the local date and time");
+          addLine("  echo <text>  Print text to the console");
+          addLine("  clear, cls   Clear the console");
+          addLine("");
+          addLine("Tip: commands are not case-sensitive.", "hint");
+          break;
+        case "about":
+          addLine("Marius Ranta");
+          addLine("Computer science student at the University of Turku.");
+          addLine("I enjoy designing, building, and solving problems with a team.");
+          break;
+        case "projects":
+          addLine("Selected project:");
+          addLine("  Command Prompt Portfolio — the interactive site you are viewing.");
+          addLinkLine("  Source:", "https://github.com/mariusranta/portfolio");
+          break;
+        case "experience":
+          addLine("Education");
+          addLine("  Computer Science — University of Turku");
+          addLine("");
+          addLine("More experience details will be added here.");
+          break;
+        case "contact":
+          addLine("You can reach me on GitHub:");
+          addLinkLine("  Profile:", "https://github.com/mariusranta");
+          addLine("No public email address is listed.");
+          break;
+        case "whoami":
+          addLine("marius");
+          break;
+        case "date":
+          addLine(new Intl.DateTimeFormat(undefined, { dateStyle: "full", timeStyle: "short" }).format(new Date()));
+          break;
+        case "echo":
+          addLine(argument);
+          break;
+        case "clear":
+        case "cls":
+          transcript.replaceChildren();
+          break;
+        case "dir":
+          addLine(" Directory of C:\\");
+          addLine("");
+          addLine("about.txt       About Marius");
+          addLine("projects.txt    Selected work");
+          addLine("experience.txt  Education and experience");
+          addLine("contact.txt     Contact information");
+          addLine("");
+          addLine("  4 File(s)", "hint");
+          break;
+        case "ver":
+          addLine("Microsoft Windows [Version 10.0.22631.1]", "banner");
+          break;
+        default:
+          addLine("'" + raw + "' is not recognized as an internal or external command,", "error");
+          addLine("operable program or batch file.", "error");
+          addLine("Type help to see the available commands.", "hint");
+      }
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const command = input.value;
+      if (command.trim()) {
+        history.push(command);
+        historyIndex = history.length;
+        draft = "";
+        run(command);
+      }
+      input.value = "";
+      input.focus();
+    });
+
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowUp") {
+        if (history.length === 0) return;
+        event.preventDefault();
+        if (historyIndex === history.length) draft = input.value;
+        historyIndex = Math.max(0, historyIndex - 1);
+        input.value = history[historyIndex];
+        input.setSelectionRange(input.value.length, input.value.length);
+      } else if (event.key === "ArrowDown") {
+        if (history.length === 0) return;
+        event.preventDefault();
+        historyIndex = Math.min(history.length, historyIndex + 1);
+        input.value = historyIndex === history.length ? draft : history[historyIndex];
+        input.setSelectionRange(input.value.length, input.value.length);
+      }
+    });
+
+    welcome();
+    if (window.matchMedia("(pointer: fine)").matches) input.focus();
+  </script>
+</body>
+</html>
