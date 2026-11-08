@@ -46,28 +46,28 @@
       box-shadow: 0 12px 36px rgba(0, 0, 0, .65);
     }
     .window.is-minimized {
-      height: 36px;
+      height: 30px;
       min-height: 0;
     }
     .window.is-minimized .terminal { display: none; }
     .window[hidden], .reopen-window[hidden] { display: none; }
     .titlebar {
-      height: 36px;
-      flex: 0 0 36px;
+      height: 30px;
+      flex: 0 0 30px;
       display: flex;
       align-items: center;
-      gap: 9px;
-      padding: 0 0 0 10px;
-      border-bottom: 1px solid #3b3b3b;
-      background: #323232;
-      color: #ededed;
+      gap: 6px;
+      padding: 0 0 0 7px;
+      border-bottom: 1px solid #202020;
+      background: #3b3b3b;
+      color: #eee;
       user-select: none;
-      font-family: "Segoe UI", Arial, sans-serif;
+      font-family: "Segoe UI", system-ui, sans-serif;
     }
     .app-icon {
-      width: 17px;
-      height: 17px;
-      flex: 0 0 17px;
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
       display: block;
       color: #dedede;
     }
@@ -75,8 +75,8 @@
       flex: 1;
       min-width: 0;
       overflow: hidden;
-      color: #ededed;
-      font: 600 14px/1.2 "Segoe UI", Arial, sans-serif;
+      color: #eee;
+      font: 400 12px/1 "Segoe UI", system-ui, sans-serif;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -95,22 +95,22 @@
       border: 0;
       border-radius: 0;
       background: transparent;
-      color: #ededed;
+      color: #eee;
       cursor: default;
     }
     .window-control svg {
-      width: 12px;
-      height: 12px;
+      width: 16px;
+      height: 16px;
       fill: none;
       stroke: currentColor;
       stroke-width: 1.4;
       stroke-linecap: square;
       stroke-linejoin: miter;
     }
-    .window-control:hover { background: #454545; }
+    .window-control:hover { background: #505050; }
     .window-control:focus-visible { outline: 1px solid #fff; outline-offset: -3px; }
-    .window-control.close { width: 48px; }
-    .window-control.close svg { width: 13px; height: 13px; }
+    .window-control.close { width: 46px; }
+    .window-control.close svg { width: 14px; height: 14px; }
     .window-control.close:hover { color: #fff; background: #c42b1c; }
     .icon-restore, .icon-restore-down { display: none; }
     .window.is-minimized .icon-minimize { display: none; }
@@ -206,8 +206,8 @@
     }
     #command::selection { background: #075907; color: #fff; }
     @media (max-width: 600px) {
-      .titlebar { height: 34px; flex-basis: 34px; padding-left: 8px; gap: 7px; }
-      .window.is-minimized { height: 34px; }
+      .titlebar { height: 30px; flex-basis: 30px; padding-left: 7px; gap: 6px; }
+      .window.is-minimized { height: 30px; }
       .window-control { width: 40px; }
       .window-control.close { width: 44px; }
       .transcript { max-height: calc(100svh - 72px); padding: 7px 8px 2px; font-size: clamp(14px, 4vw, 16px); }
