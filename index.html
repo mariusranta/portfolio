@@ -11,7 +11,7 @@
       color-scheme: dark;
       font-family: "Lucida Console", Consolas, "Courier New", monospace;
       background: #000;
-      color: #008000;
+      color: #13A10E;
       font-weight: 400;
       font-synthesis: none;
     }
@@ -34,65 +34,51 @@
       background: #000;
     }
     .titlebar {
-      height: 40px;
-      flex: 0 0 40px;
-      display: flex;
-      align-items: stretch;
-      gap: 5px;
-      padding: 0 8px 0 5px;
-      border-bottom: 1px solid #303030;
-      background: #202020;
-      user-select: none;
-      font-family: "Segoe UI", Arial, sans-serif;
-      text-shadow: none;
-    }
-    .active-tab {
-      width: min(290px, calc(100vw - 92px));
-      flex: 0 1 290px;
-      height: 36px;
+      height: 32px;
+      flex: 0 0 32px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-top: 4px;
-      padding: 0 9px;
-      overflow: hidden;
-      border: 1px solid #333;
-      border-bottom-color: #101010;
-      border-radius: 7px 7px 0 0;
-      background: #101010;
-      color: #dedede;
+      gap: 8px;
+      padding: 0 0 0 9px;
+      border-bottom: 1px solid #3a3a3a;
+      background: #2b2b2b;
+      color: #e5e5e5;
+      user-select: none;
+      font-family: "Segoe UI", Arial, sans-serif;
     }
     .app-icon {
-      width: 18px;
-      height: 18px;
-      flex: 0 0 18px;
-      display: grid;
-      place-items: center;
-      border: 1px solid #616161;
-      border-radius: 2px;
-      color: #e2e2e2;
-      font: 700 9px/1 Consolas, monospace;
-      background: #171717;
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+      display: block;
+      color: #d8d8d8;
     }
     .title {
       flex: 1;
+      min-width: 0;
       overflow: hidden;
-      color: #e2e2e2;
+      color: #e5e5e5;
       font: 13px/1.2 "Segoe UI", Arial, sans-serif;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    .tab-close, .tab-tool {
+    .window-controls {
+      height: 100%;
       flex: 0 0 auto;
+      display: flex;
+      align-items: stretch;
+    }
+    .window-control {
+      width: 46px;
+      height: 100%;
       display: grid;
       place-items: center;
-      color: #c9c9c9;
-      font: 15px/1 "Segoe UI", Arial, sans-serif;
+      color: #dedede;
+      font: 13px/1 "Segoe UI", Arial, sans-serif;
     }
-    .tab-close { width: 22px; height: 100%; }
-    .tab-tools { display: flex; align-items: center; gap: 1px; }
-    .tab-tool { width: 34px; height: 34px; font-size: 18px; }
-    .tab-tool:last-child { font-size: 15px; }
+    .window-control.maximize { font-size: 12px; }
+    .window-control.close { width: 48px; font-size: 16px; }
+    .window-control.close:hover { color: #fff; background: #c42b1c; }
     .terminal {
       min-height: 0;
       flex: 1;
@@ -107,7 +93,7 @@
       max-height: calc(100svh - 78px);
       overflow: auto;
       padding: 5px 8px 2px;
-      color: #008000;
+      color: #13A10E;
       font-size: clamp(16px, 1.15vw, 18px);
       line-height: 1.35;
       scrollbar-color: #075907 #000;
@@ -117,37 +103,37 @@
     .line { min-height: 1.35em; white-space: pre-wrap; }
     .line.blank { min-height: .72em; }
     .line.banner {
-      color: #008000;
+      color: #13A10E;
       font-size: 1em;
       font-weight: 400;
       text-shadow: none;
     }
-    .line.hint { color: #008000; }
-    .line.error { color: #008000; }
+    .line.hint { color: #13A10E; }
+    .line.error { color: #13A10E; }
     .command-line {
       display: flex;
       align-items: baseline;
       gap: 0;
       min-height: 1.35em;
-      color: #008000;
+      color: #13A10E;
     }
-    .prompt { flex: 0 0 auto; color: #008000; }
-    .command-text { color: #008000; }
+    .prompt { flex: 0 0 auto; color: #13A10E; }
+    .command-text { color: #13A10E; }
     a {
-      color: #008000;
+      color: #13A10E;
       text-decoration: underline;
-      text-decoration-color: rgba(0, 255, 0, .62);
+      text-decoration-color: rgba(19, 161, 14, .62);
       text-underline-offset: 3px;
     }
     a:hover, a:focus-visible { color: #c5ffc5; text-decoration-color: currentColor; }
-    a:focus-visible { outline: 1px dotted #008000; outline-offset: 3px; }
+    a:focus-visible { outline: 1px dotted #13A10E; outline-offset: 3px; }
     .input-form {
       flex: 0 0 auto;
       display: flex;
       align-items: baseline;
       gap: 0;
       padding: 0 8px 12px;
-      color: #008000;
+      color: #13A10E;
       font-size: clamp(16px, 1.15vw, 18px);
       line-height: 1.35;
     }
@@ -160,16 +146,16 @@
       border-radius: 0;
       outline: 0;
       background: transparent;
-      color: #008000;
+      color: #13A10E;
       caret-color: #f4fff4;
       caret-shape: block;
       font: inherit;
     }
     #command::selection { background: #075907; color: #fff; }
     @media (max-width: 600px) {
-      .titlebar { height: 38px; flex-basis: 38px; padding-right: 5px; }
-      .active-tab { height: 34px; margin-top: 4px; }
-      .tab-tool { width: 30px; }
+      .titlebar { height: 32px; flex-basis: 32px; padding-left: 8px; gap: 7px; }
+      .window-control { width: 38px; }
+      .window-control.close { width: 42px; }
       .transcript { max-height: calc(100svh - 72px); padding: 7px 8px 2px; font-size: clamp(14px, 4vw, 16px); }
       .input-form { padding: 0 8px max(12px, env(safe-area-inset-bottom)); font-size: clamp(14px, 4vw, 16px); }
     }
@@ -181,14 +167,16 @@
 <body>
   <main class="window" aria-label="Marius Ranta personal website">
     <header class="titlebar">
-      <div class="active-tab">
-        <span class="app-icon" aria-hidden="true">&gt;_</span>
-        <span class="title">Command Prompt</span>
-        <span class="tab-close" aria-hidden="true">×</span>
-      </div>
-      <div class="tab-tools" aria-hidden="true">
-        <span class="tab-tool">+</span>
-        <span class="tab-tool">⌄</span>
+      <svg class="app-icon" viewBox="0 0 16 16" aria-hidden="true">
+        <rect x="1" y="2" width="14" height="11" rx="1" fill="none" stroke="currentColor"/>
+        <path d="M2 4h12" stroke="currentColor"/>
+        <path d="m4 6 2 1.5L4 9M7 9h3" fill="none" stroke="currentColor" stroke-linecap="square"/>
+      </svg>
+      <span class="title">Command Prompt</span>
+      <div class="window-controls" aria-hidden="true">
+        <span class="window-control minimize">−</span>
+        <span class="window-control maximize">□</span>
+        <span class="window-control close">×</span>
       </div>
     </header>
     <section class="terminal" aria-label="Interactive command prompt">
