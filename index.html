@@ -296,9 +296,11 @@
       line.append(document.createTextNode(label + " "));
       const link = document.createElement("a");
       link.href = url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.textContent = url.replace(/^https?:\/\//, "");
+      if (!url.startsWith("mailto:")) {
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
+      link.textContent = url.replace(/^mailto:/, "").replace(/^https?:\/\//, "");
       line.appendChild(link);
       transcript.appendChild(line);
       transcript.scrollTop = transcript.scrollHeight;
@@ -355,9 +357,9 @@
           addLine("More experience details will be added here.");
           break;
         case "contact":
-          addLine("You can reach me on GitHub:");
-          addLinkLine("  Profile:", "https://github.com/mariusranta");
-          addLine("No public email address is listed.");
+          addLine("Contact:");
+          addLinkLine("  LinkedIn:", "https://www.linkedin.com/in/marius-ranta/");
+          addLinkLine("  Email:", "mailto:mariusranta@gmail.com");
           break;
         case "whoami":
           addLine("marius");
