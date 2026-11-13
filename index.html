@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#000000">
   <meta name="description" content="Marius Ranta — personal website, presented as a classic command prompt.">
-  <title>Command Prompt — Marius Ranta</title>
+  <title>Marius Ranta</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+  <div class="desktop" id="desktop">
   <main class="window" id="command-window" aria-label="Marius Ranta personal website">
     <header class="titlebar">
       <svg class="app-icon" viewBox="0 0 16 16" aria-hidden="true">
@@ -39,6 +40,19 @@
       </form>
     </section>
   </main>
+  <section class="window projects-window" id="projects-window" aria-labelledby="projects-title" hidden>
+    <header class="titlebar">
+      <svg class="app-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5h7l3 3V14.5h-10z" fill="none" stroke="currentColor"/><path d="M10 1.5v3h3M5 7h6M5 9.5h6M5 12h4" fill="none" stroke="currentColor"/></svg>
+      <span class="title" id="projects-title">Projects - Notepad</span>
+      <div class="window-controls">
+        <button class="window-control minimize" id="minimize-projects" type="button" aria-label="Minimize Projects" title="Minimize"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+        <button class="window-control maximize" id="maximize-projects" type="button" aria-label="Maximize Projects" title="Maximize"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="6.5" width="11" height="11"/></svg></button>
+        <button class="window-control close" id="close-projects" type="button" aria-label="Close Projects" title="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
+      </div>
+    </header>
+    <div class="projects-document" id="projects-document" role="document" aria-label="Projects document" tabindex="0"></div>
+  </section>
+  </div>
   <button class="reopen-window" id="reopen-window" type="button" hidden>Open Command Prompt</button>
   <script type="module" src="./scripts/app.js"></script>
 </body>

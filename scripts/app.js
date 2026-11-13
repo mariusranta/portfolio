@@ -1,7 +1,12 @@
 import { runCommand } from "./commands.js";
 import { createTerminal } from "./terminal.js";
 import { bindWindowControls } from "./window-controls.js";
+import { createProjectsWindow } from "./projects-window.js";
 
+const desktop = document.getElementById("desktop");
+const projectsWindow = document.getElementById("projects-window");
+const projectsDocument = document.getElementById("projects-document");
+const projectsApp = createProjectsWindow({ desktop, projectsWindow, projectsDocument });
 const transcript = document.getElementById("transcript");
 const form = document.getElementById("command-form");
 const input = document.getElementById("command");
@@ -24,7 +29,7 @@ form.addEventListener("submit", function (event) {
     history.push(command);
     historyIndex = history.length;
     draft = "";
-    runCommand(command, terminal);
+    runCommand(command, terminal, projectsApp.open);
   }
   input.value = "";
   input.focus();

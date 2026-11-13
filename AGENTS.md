@@ -7,7 +7,7 @@ This is a small, dependency-free static site. The repository root contains `inde
 - `app.js` wires page startup, command submission, and history.
 - `commands.js` parses commands and produces command output.
 - `terminal.js` renders transcript lines, links, and timelines.
-- `window-controls.js` handles minimize, maximize, close, and reopen.
+- `window-controls.js` handles terminal minimize, maximize, close, and reopen.\n- `projects-window.js` renders the Projects document and its in-page window controls, including image and playable video blocks.
 
 `ARCHITECTURE.md` documents the boundaries and regression checklist. Keep the site static and avoid adding a framework or build step without a clear need.
 

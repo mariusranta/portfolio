@@ -16,6 +16,7 @@ scripts/
   commands.js               Existing command parser, command output, timeline data
   terminal.js               Safe transcript, command, timeline, and link rendering
   window-controls.js        Minimize, maximize, close, reopen behavior
+  projects-window.js        Projects document, media blocks, and app controls
 ARCHITECTURE.md             This plan and the regression checklist
 ```
 
@@ -28,8 +29,8 @@ Load `styles.css` as a normal stylesheet and `scripts/app.js` as a native ES mod
 1. Capture the current page at desktop (1440×900) and mobile (390×844) before editing, then compare after editing. Check the black canvas, green monospace terminal text, title bar, window controls, line spacing, transcript scrolling, and mobile breakpoint.
 2. Compare the command outputs for `help`, `about`, `projects`, `experience`, `contact`, `whoami`, `date`, `echo`, `clear`, `cls`, `dir`, `ver`, `gf`, and `girlfriend`; include mixed-case and unknown commands.
 3. Exercise Enter submission, Up/Down history and draft restoration, clear behavior, minimize/restore, maximize/restore, close/reopen, input focus, external links, and a narrow viewport.
-4. Check that every referenced asset loads, the JavaScript parses, dynamic output is still rendered safely, and the Vercel preview deployment succeeds before promoting the verified commit to production.
+4. Check that every referenced asset loads, the JavaScript parses, dynamic output is still rendered safely, and the Vercel preview deployment succeeds before promoting the verified commit to production.\n5. Type `projects` and verify the Notepad window opens beside the console on desktop and below it on mobile; exercise minimize, maximize, close, reopen-by-command, scrolling, links, and image/video rendering.
 
-## Scope
+The `projects` command preserves its transcript output and opens a separate in-page Notepad-style Projects window. Project content is represented as safe text/link/image/video blocks; media is rendered with native image and video elements. The desktop uses a side-by-side layout, stacking below the terminal at narrow widths. Window controls only affect webpage elements.\n\n## Scope
 
 This is an implementation-only refactor. Do not change the page copy, command output, terminal colors, font stack, layout, breakpoints, accessibility labels, or interaction semantics.
