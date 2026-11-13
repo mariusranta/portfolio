@@ -262,8 +262,8 @@
 
 
 /* Projects app */
-.desktop { width: min(100%, 1180px); margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 16px; }
-.desktop.projects-open { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr); align-items: stretch; }
+.desktop { width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 16px; }
+.desktop.projects-open { width: min(100%, 1180px); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr); align-items: stretch; }
 .desktop.projects-open > .window { position: relative; inset: auto; width: 100%; height: min(76vh, 700px); }
 .projects-window[hidden] { display: none; }
 .projects-document { flex: 1; min-height: 0; overflow: auto; padding: 16px 18px; background: #000; color: #00ff00; font: inherit; line-height: 1.55; white-space: normal; }
