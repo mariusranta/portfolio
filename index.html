@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#012456">
   <meta name="description" content="Marius Ranta — personal website, presented as a classic command prompt.">
   <title>Marius Ranta</title>
   <link rel="stylesheet" href="./styles.css">
@@ -17,25 +17,25 @@
         <path d="M2 4h12" stroke="currentColor"/>
         <path d="m4 6 2 1.5L4 9M7 9h3" fill="none" stroke="currentColor" stroke-linecap="square"/>
       </svg>
-      <span class="title">Command Prompt</span>
+      <span class="title">Windows PowerShell</span>
       <div class="window-controls">
-        <button class="window-control minimize" id="minimize-window" type="button" aria-label="Minimize Command Prompt" title="Minimize">
+        <button class="window-control minimize" id="minimize-window" type="button" aria-label="Minimize Windows PowerShell" title="Minimize">
           <svg class="icon-minimize" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>
           <svg class="icon-restore" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="6.5" width="11" height="11"/></svg>
         </button>
-        <button class="window-control maximize" id="maximize-window" type="button" aria-label="Restore Command Prompt" title="Restore">
+        <button class="window-control maximize" id="maximize-window" type="button" aria-label="Restore Windows PowerShell" title="Restore">
           <svg class="icon-maximize" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="6.5" width="11" height="11"/></svg>
           <svg class="icon-restore-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6.5h9.5V16M6.5 9.5v8h9"/></svg>
         </button>
-        <button class="window-control close" id="close-window" type="button" aria-label="Close Command Prompt" title="Close">
+        <button class="window-control close" id="close-window" type="button" aria-label="Close Windows PowerShell" title="Close">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg>
         </button>
       </div>
     </header>
-    <section class="terminal" aria-label="Interactive command prompt">
+    <section class="terminal" aria-label="Interactive PowerShell console">
       <div class="transcript" id="transcript" role="log" aria-live="polite" aria-relevant="additions text"></div>
       <form class="input-form" id="command-form" autocomplete="off">
-        <label class="prompt" for="command">C:\Users\Marius&gt;</label>
+        <label class="prompt" for="command">PS C:\Users\Marius&gt;</label>
         <input id="command" name="command" type="text" aria-label="Type a command" autocomplete="off" autocapitalize="off" spellcheck="false">
       </form>
     </section>
@@ -53,7 +53,7 @@
     <div class="projects-document" id="projects-document" role="document" aria-label="Projects document" tabindex="0"></div>
   </section>
   </div>
-  <button class="reopen-window" id="reopen-window" type="button" hidden>Open Command Prompt</button>
+  <button class="reopen-window" id="reopen-window" type="button" hidden>Open Windows PowerShell</button>
   <script type="module" src="./scripts/app.js"></script>
 </body>
 </html>
