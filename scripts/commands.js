@@ -1,4 +1,4 @@
-export function runCommand(commandText, terminal) {
+export function runCommand(commandText, terminal, openProjects = () => {}) {
     const raw = commandText.trim();
     if (!raw) return;
     terminal.addCommand(raw);
@@ -34,6 +34,7 @@ export function runCommand(commandText, terminal) {
         terminal.addLine("Selected project:");
         terminal.addLine("  Command Prompt Portfolio — the interactive site you are viewing.");
         terminal.addLinkLine("  Source:", "https://github.com/mariusranta/portfolio");
+        openProjects();
         break;
       case "experience":
         terminal.addLine("Experience", "hint");
