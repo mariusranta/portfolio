@@ -3,7 +3,10 @@ const projectDocument = [
   { type: "paragraph", text: "A selection of projects I have built and worked on." },
   { type: "heading", level: 3, text: "Command Prompt Portfolio" },
   { type: "paragraph", text: "An interactive personal website presented as a classic command prompt." },
-  { type: "link", text: "View source on GitHub", href: "https://github.com/mariusranta/portfolio" }
+  { type: "link", text: "View source on GitHub", href: "https://github.com/mariusranta/portfolio" },
+  { type: "heading", level: 3, text: "Vexo Baby" },
+  { type: "paragraph", text: "Y Combinator Vexo AI wearable hackathon." },
+  { type: "link", text: "View repository on GitHub", href: "https://github.com/mariusranta/vexo-baby" }
 ];
 
 export function renderProjectBlocks(container, blocks) {
